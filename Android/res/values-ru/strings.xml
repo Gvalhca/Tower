@@ -483,6 +483,8 @@
     <string name="label_custom_video_stream">Пользовательский видеопоток</string>
     <string name="hint_custom_video_stream_udp_port">0000</string>
     <string name="label_udp_port">UDP-порт:</string>
+    <string name="toast_mission_item_received">Новые точки получены с борта \n %1$d / %2$d загружено</string>
+    <string name="toast_mission_item_sent">Новые точки отправлены на борт \n %1$d / %2$d загружено</string>
     <string name="toast_mission_sent">Путевые точки отправлены</string>
     <string name="speak_mission_sent">Путевые точки сохранены в Drone</string>
     <string name="toast_mission_received">Путевые точки полученны от дрона</string>

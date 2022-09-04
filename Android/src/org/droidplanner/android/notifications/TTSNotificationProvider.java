@@ -75,6 +75,7 @@ public class TTSNotificationProvider implements OnInitListener,
         eventFilter.addAction(AttributeEvent.GPS_FIX);
         eventFilter.addAction(AttributeEvent.MISSION_RECEIVED);
         eventFilter.addAction(AttributeEvent.MISSION_ITEM_RECEIVED);
+        eventFilter.addAction(AttributeEvent.MISSION_ITEM_SENT);
         eventFilter.addAction(AttributeEvent.HEARTBEAT_FIRST);
         eventFilter.addAction(AttributeEvent.HEARTBEAT_TIMEOUT);
         eventFilter.addAction(AttributeEvent.HEARTBEAT_RESTORED);
@@ -92,6 +93,7 @@ public class TTSNotificationProvider implements OnInitListener,
         public void onReceive(Context context, Intent intent) {
             if (tts == null)
                 return;
+            long currentTime = System.currentTimeMillis();
 
             final String action = intent.getAction();
             State droneState = drone.getAttribute(AttributeType.STATE);
@@ -113,6 +115,16 @@ public class TTSNotificationProvider implements OnInitListener,
                         speakMode(droneState.getVehicleMode());
                     break;
 
+                case AttributeEvent.MISSION_ITEM_SENT:
+                    if (currentTime - lastToastTime > 2000) {
+                        lastToastTime = currentTime;
+//                    context.getString(R.string.toast_mission_item_received, Drone.loadedPointsCounter, Drone.pointsInMission);
+                        Toast.makeText(context, context.getString(R.string.toast_mission_item_sent, Drone.loadedPointsCounter, Drone.pointsInMission), Toast.LENGTH_SHORT).show();
+                    }
+//                    Toast.makeText(context, R.string.toast_mission_sent, Toast.LENGTH_SHORT).show();
+//                    speak(context.getString(R.string.speak_mission_sent));
+                    break;
+
                 case AttributeEvent.MISSION_SENT:
                     Toast.makeText(context, R.string.toast_mission_sent, Toast.LENGTH_SHORT).show();
                     speak(context.getString(R.string.speak_mission_sent));
@@ -126,8 +138,7 @@ public class TTSNotificationProvider implements OnInitListener,
 
 
                 case AttributeEvent.MISSION_ITEM_RECEIVED:
-                    long currentTime = System.currentTimeMillis();
-                    if (currentTime - lastToastTime > 1800) {
+                    if (currentTime - lastToastTime > 2000) {
                         lastToastTime = currentTime;
 //                    context.getString(R.string.toast_mission_item_received, Drone.loadedPointsCounter, Drone.pointsInMission);
                         Toast.makeText(context, context.getString(R.string.toast_mission_item_received, Drone.loadedPointsCounter, Drone.pointsInMission), Toast.LENGTH_SHORT).show();
