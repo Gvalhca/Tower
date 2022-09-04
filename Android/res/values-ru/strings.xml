@@ -485,7 +485,7 @@
     <string name="label_udp_port">UDP-порт:</string>
     <string name="toast_mission_sent">Путевые точки отправлены</string>
     <string name="speak_mission_sent">Путевые точки сохранены в Drone</string>
-    <string name="toast_mission_received">Путевые точки, полученны от дрона</string>
+    <string name="toast_mission_received">Путевые точки полученны от дрона</string>
     <string name="speak_mission_received">Полученные путевые точки</string>
     <string name="speak_heartbeat_first">Связаны</string>
     <string name="speak_heartbeat_timeout">Канал передачи данных потерян, проверьте соединение.</string>

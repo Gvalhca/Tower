@@ -49,6 +49,7 @@ public class TTSNotificationProvider implements OnInitListener,
     private static final String CLAZZ_NAME = TTSNotificationProvider.class.getName();
     private static final String TAG = TTSNotificationProvider.class.getSimpleName();
 
+    private static long lastToastTime = 0;
     private static final long WARNING_DELAY = 1500l; //ms
 
     private static final double BATTERY_DISCHARGE_NOTIFICATION_EVERY_PERCENT = 10;
@@ -73,6 +74,7 @@ public class TTSNotificationProvider implements OnInitListener,
         eventFilter.addAction(AttributeEvent.MISSION_SENT);
         eventFilter.addAction(AttributeEvent.GPS_FIX);
         eventFilter.addAction(AttributeEvent.MISSION_RECEIVED);
+        eventFilter.addAction(AttributeEvent.MISSION_ITEM_RECEIVED);
         eventFilter.addAction(AttributeEvent.HEARTBEAT_FIRST);
         eventFilter.addAction(AttributeEvent.HEARTBEAT_TIMEOUT);
         eventFilter.addAction(AttributeEvent.HEARTBEAT_RESTORED);
@@ -122,10 +124,21 @@ public class TTSNotificationProvider implements OnInitListener,
                         speakGpsMode(droneGps.getFixType());
                     break;
 
+
+                case AttributeEvent.MISSION_ITEM_RECEIVED:
+                    long currentTime = System.currentTimeMillis();
+                    if (currentTime - lastToastTime > 1800) {
+                        lastToastTime = currentTime;
+//                    context.getString(R.string.toast_mission_item_received, Drone.loadedPointsCounter, Drone.pointsInMission);
+                        Toast.makeText(context, context.getString(R.string.toast_mission_item_received, Drone.loadedPointsCounter, Drone.pointsInMission), Toast.LENGTH_SHORT).show();
+                    }
+                    break;
                 case AttributeEvent.MISSION_RECEIVED:
                     Toast.makeText(context, R.string.toast_mission_received, Toast.LENGTH_SHORT).show();
                     speak(context.getString(R.string.speak_mission_received));
                     break;
+
+
 
                 case AttributeEvent.HEARTBEAT_FIRST:
                     speak(context.getString(R.string.speak_heartbeat_first));

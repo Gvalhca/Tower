@@ -562,6 +562,7 @@
     <string name="toast_mission_sent">Waypoints sent</string>
     <string name="speak_mission_sent">Waypoints saved to Drone</string>
     <string name="toast_mission_received">Waypoints received from Drone</string>
+    <string name="toast_mission_item_received">New wp received from drone \n %1$d / %2$d Done</string>
     <string name="speak_mission_received">Waypoints received</string>
     <string name="speak_heartbeat_first">Connected</string>
     <string name="speak_heartbeat_timeout">Data link lost, check connection.</string>
