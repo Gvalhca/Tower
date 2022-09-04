@@ -25,6 +25,7 @@ import com.o3dr.services.android.lib.drone.mission.item.MissionItem;
 import com.o3dr.services.android.lib.drone.mission.item.MissionItem.SpatialItem;
 import com.o3dr.services.android.lib.drone.mission.item.command.ChangeSpeed;
 import com.o3dr.services.android.lib.drone.mission.item.command.ReturnToLaunch;
+import com.o3dr.services.android.lib.drone.mission.item.command.SetServo;
 import com.o3dr.services.android.lib.drone.mission.item.command.Takeoff;
 import com.o3dr.services.android.lib.drone.mission.item.complex.SplineSurvey;
 import com.o3dr.services.android.lib.drone.mission.item.complex.StructureScanner;
@@ -408,10 +409,29 @@ public class MissionProxy implements DPMap.PathSource {
             Takeoff takeOff = new Takeoff();
             takeOff.setTakeoffAltitude(defaultAlt);
             addMissionItem(0, takeOff);
+
+
         }
 
+        int i = -1;
+        do {i++;}
+        while (i < missionItemProxies.size() && missionItemProxies.get(i).getMissionItem().getType() != MissionItemType.WAYPOINT);
+        i++;
+//        while (i < missionItemProxies.size() && missionItemProxies.get(i).getMissionItem().getType() != MissionItemType.WAYPOINT){
+//            i++;
+//        }
+
+        SetServo turnOnSound = new SetServo();
+        turnOnSound.setChannel(6);
+        turnOnSound.setPwm(20000);
+        addMissionItem(i, turnOnSound);
+
         if (!isLastItemLandOrRTL()) {
+            SetServo turnOffSound = new SetServo();
+            turnOffSound.setChannel(6);
+            turnOffSound.setPwm(0);
             ReturnToLaunch rtl = new ReturnToLaunch();
+            addMissionItem(turnOffSound);
             addMissionItem(rtl);
         }
     }
