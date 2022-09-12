@@ -23,6 +23,7 @@ import com.o3dr.services.android.lib.coordinate.LatLongAlt;
 import com.o3dr.services.android.lib.drone.attribute.AttributeEvent;
 import com.o3dr.services.android.lib.drone.attribute.AttributeType;
 import com.o3dr.services.android.lib.drone.mission.item.MissionItem;
+import com.o3dr.services.android.lib.drone.property.Altitude;
 import com.o3dr.services.android.lib.drone.property.Gps;
 import com.o3dr.services.android.lib.drone.property.GuidedState;
 import com.o3dr.services.android.lib.drone.property.State;
@@ -233,7 +234,10 @@ public class FlightMapFragment extends DroneMap implements DPMap.OnMapLongClickL
     @Override
     public void onForcedGuidedPoint(LatLng coord) {
         try {
-            ControlApi.getApi(drone).goTo(MapUtils.latLngToCoord(coord), true, null);
+            //ControlApi.getApi(drone).goTo(MapUtils.latLngToCoord(coord), true, null);
+            final Altitude altitude = drone.getAttribute(AttributeType.ALTITUDE);
+
+            ControlApi.getApi(drone).goTo(MapUtils.latLngToCoord(coord), altitude.getAltitude(), true, null);
         } catch (Exception e) {
             Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
