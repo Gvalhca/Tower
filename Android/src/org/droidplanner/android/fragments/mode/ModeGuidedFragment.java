@@ -148,7 +148,8 @@ public class ModeGuidedFragment extends ApiListenerFragment implements
             {
                 //ControlApi.getApi(drone).lookAt(new LatLongAlt(coord, 0), false, null);
                 ControlApi.getApi(drone).lookAt(new LatLongAlt(coord, 0), false, null);
-                ControlApi.getApi(drone).goTo(coord, false, null);
+                final Altitude altitude = drone.getAttribute(AttributeType.ALTITUDE);
+                ControlApi.getApi(drone).goTo(coord, altitude.getAltitude(),false, null);
             }
         }
     }
