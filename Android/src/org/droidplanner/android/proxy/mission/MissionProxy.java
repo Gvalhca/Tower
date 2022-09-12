@@ -413,25 +413,26 @@ public class MissionProxy implements DPMap.PathSource {
 
         }
 
-        int i = -1;
-        do {i++;}
-        while (i < missionItemProxies.size() && missionItemProxies.get(i).getMissionItem().getType() != MissionItemType.WAYPOINT);
-        i++;
+//        int i = -1;
+//        do {i++;}
+//        while (i < missionItemProxies.size() && missionItemProxies.get(i).getMissionItem().getType() != MissionItemType.WAYPOINT);
+//        i++;
 //        while (i < missionItemProxies.size() && missionItemProxies.get(i).getMissionItem().getType() != MissionItemType.WAYPOINT){
 //            i++;
 //        }
 
-        SetServo turnOnSound = new SetServo();
-        turnOnSound.setChannel(6);
-        turnOnSound.setPwm(20000);
-        addMissionItem(i, turnOnSound);
+//        SetServo turnOnSound = new SetServo();
+//        turnOnSound.setChannel(6);
+//        turnOnSound.setPwm(20000);
+//        addMissionItem(i, turnOnSound);
 
         if (!isLastItemLandOrRTL()) {
-            SetServo turnOffSound = new SetServo();
-            turnOffSound.setChannel(6);
-            turnOffSound.setPwm(0);
+//            SetServo turnOffSound = new SetServo();
+//            turnOffSound.setChannel(6);
+//            turnOffSound.setPwm(0);
+//            addMissionItem(turnOffSound);
+
             ReturnToLaunch rtl = new ReturnToLaunch();
-            addMissionItem(turnOffSound);
             addMissionItem(rtl);
         }
     }
@@ -831,7 +832,8 @@ public class MissionProxy implements DPMap.PathSource {
     }
 
     public void sendMissionToAPM(Drone drone) {
-        MissionApi.getApi(drone).setMission(generateMission(), true);
+        Mission m = generateMission();
+        MissionApi.getApi(drone).setMission(m, true);
 
         int missionItemsCount = missionItemProxies.size();
 
