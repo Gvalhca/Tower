@@ -236,8 +236,9 @@ public class FlightMapFragment extends DroneMap implements DPMap.OnMapLongClickL
         try {
             //ControlApi.getApi(drone).goTo(MapUtils.latLngToCoord(coord), true, null);
             final Altitude altitude = drone.getAttribute(AttributeType.ALTITUDE);
+            final Altitude relAltitude = drone.getAttribute(AttributeType.RELATIVE_ALTITUDE);
 
-            ControlApi.getApi(drone).goTo(MapUtils.latLngToCoord(coord), altitude.getAltitude(), true, null);
+            ControlApi.getApi(drone).goTo(MapUtils.latLngToCoord(coord), relAltitude.getAltitude(), true, null);
         } catch (Exception e) {
             Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }

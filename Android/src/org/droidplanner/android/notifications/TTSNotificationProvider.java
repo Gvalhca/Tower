@@ -184,6 +184,7 @@ public class TTSNotificationProvider implements OnInitListener,
 
                 case AttributeEvent.ALTITUDE_UPDATED:
                     final Altitude altitude = drone.getAttribute(AttributeType.ALTITUDE);
+                    final Altitude relAltitude = drone.getAttribute(AttributeType.ALTITUDE);
                     if (mAppPrefs.hasExceededMaxAltitude(altitude.getAltitude())) {
                         if (isMaxAltExceeded.compareAndSet(false, true)) {
                             handler.postDelayed(maxAltitudeExceededWarning, WARNING_DELAY);

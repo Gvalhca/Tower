@@ -493,8 +493,9 @@ public class ActionBarTelemFragment extends ApiListenerFragment {
     private void updateAltitudeTelem() {
         final Drone drone = getDrone();
         final Altitude altitude = drone.getAttribute(AttributeType.ALTITUDE);
-        if (altitude != null) {
-            double alt = altitude.getAltitude();
+        final Altitude relAltitude = drone.getAttribute(AttributeType.RELATIVE_ALTITUDE);
+        if (relAltitude != null) {
+            double alt = relAltitude.getAltitude();
             LengthUnit altUnit = getLengthUnitProvider().boxBaseValueToTarget(alt);
 
             this.altitudeTelem.setText(altUnit.toString());

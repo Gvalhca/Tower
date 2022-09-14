@@ -217,6 +217,7 @@ public abstract class DroneMap extends ApiListenerFragment {
     protected LatLongAlt getCurrentFlightPoint() {
         final Gps droneGps = drone.getAttribute(AttributeType.GPS);
         if (droneGps != null && droneGps.isValid()) {
+            ///       mb relative alt?
             Altitude droneAltitude = drone.getAttribute(AttributeType.ALTITUDE);
             LatLongAlt point = new LatLongAlt(droneGps.getPosition(),
                     droneAltitude.getAltitude());
