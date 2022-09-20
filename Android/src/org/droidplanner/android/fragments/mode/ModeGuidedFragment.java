@@ -147,8 +147,8 @@ public class ModeGuidedFragment extends ApiListenerFragment implements
             if (Drone.currentLongPressState == Drone.LongPressState.GOTO)
             {
                 //ControlApi.getApi(drone).lookAt(new LatLongAlt(coord, 0), false, null);
-                ControlApi.getApi(drone).lookAt(new LatLongAlt(coord, 0), false, null);
-                final Altitude altitude = drone.getAttribute(AttributeType.ALTITUDE);
+                // lookAtDebug
+                final Altitude altitude = drone.getAttribute(AttributeType.RELATIVE_ALTITUDE);
                 ControlApi.getApi(drone).goTo(coord, altitude.getAltitude(),false, null);
             }
         }

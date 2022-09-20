@@ -53,7 +53,9 @@ public class ActionBarTelemFragment extends ApiListenerFragment {
         eventFilter.addAction(AttributeEvent.SIGNAL_UPDATED);
         eventFilter.addAction(AttributeEvent.STATE_VEHICLE_MODE);
         eventFilter.addAction(AttributeEvent.TYPE_UPDATED);
-        eventFilter.addAction(AttributeEvent.ALTITUDE_UPDATED);
+        eventFilter.addAction(AttributeEvent .ALTITUDE_UPDATED);
+        eventFilter.addAction(AttributeEvent.RELATIVE_ALTITUDE_UPDATED);
+        eventFilter.addAction(AttributeEvent.GLOBAL_ALTITUDE_UPDATED);
 
         eventFilter.addAction(SettingsFragment.ACTION_PREF_HDOP_UPDATE);
         eventFilter.addAction(SettingsFragment.ACTION_PREF_UNIT_SYSTEM_UPDATE);
@@ -113,7 +115,7 @@ public class ActionBarTelemFragment extends ApiListenerFragment {
                     updateHomeTelem();
                     break;
 
-                case AttributeEvent.ALTITUDE_UPDATED:
+                case AttributeEvent.RELATIVE_ALTITUDE_UPDATED:
                     updateAltitudeTelem();
                     break;
 
@@ -492,7 +494,7 @@ public class ActionBarTelemFragment extends ApiListenerFragment {
 
     private void updateAltitudeTelem() {
         final Drone drone = getDrone();
-        final Altitude altitude = drone.getAttribute(AttributeType.ALTITUDE);
+        final Altitude altitude = drone.getAttribute(AttributeType.RELATIVE_ALTITUDE);
         if (altitude != null) {
             double alt = altitude.getAltitude();
             LengthUnit altUnit = getLengthUnitProvider().boxBaseValueToTarget(alt);

@@ -83,6 +83,8 @@ public class TTSNotificationProvider implements OnInitListener,
         eventFilter.addAction(AttributeEvent.FOLLOW_START);
         eventFilter.addAction(AttributeEvent.AUTOPILOT_ERROR);
         eventFilter.addAction(AttributeEvent.ALTITUDE_UPDATED);
+        eventFilter.addAction(AttributeEvent.RELATIVE_ALTITUDE_UPDATED);
+        eventFilter.addAction(AttributeEvent.GLOBAL_ALTITUDE_UPDATED);
         eventFilter.addAction(AttributeEvent.SIGNAL_WEAK);
         eventFilter.addAction(AttributeEvent.WARNING_NO_GPS);
         eventFilter.addAction(AttributeEvent.HOME_UPDATED);
@@ -182,8 +184,8 @@ public class TTSNotificationProvider implements OnInitListener,
                     speak(context.getString(R.string.speak_follow_start));
                     break;
 
-                case AttributeEvent.ALTITUDE_UPDATED:
-                    final Altitude altitude = drone.getAttribute(AttributeType.ALTITUDE);
+                case AttributeEvent.RELATIVE_ALTITUDE_UPDATED:
+                    final Altitude altitude = drone.getAttribute(AttributeType.RELATIVE_ALTITUDE);
                     if (mAppPrefs.hasExceededMaxAltitude(altitude.getAltitude())) {
                         if (isMaxAltExceeded.compareAndSet(false, true)) {
                             handler.postDelayed(maxAltitudeExceededWarning, WARNING_DELAY);
@@ -314,7 +316,7 @@ public class TTSNotificationProvider implements OnInitListener,
                 }
 
                 if (speechPrefs.get(DroidPlannerPrefs.PREF_TTS_PERIODIC_ALT)) {
-                    final Altitude altitude = drone.getAttribute(AttributeType.ALTITUDE);
+                    final Altitude altitude = drone.getAttribute(AttributeType.RELATIVE_ALTITUDE);
                     mMessageBuilder.append(context.getString(R.string.periodic_status_altitude, (int) (altitude.getAltitude())));
                 }
 

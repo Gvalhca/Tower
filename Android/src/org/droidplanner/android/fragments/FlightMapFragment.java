@@ -234,9 +234,8 @@ public class FlightMapFragment extends DroneMap implements DPMap.OnMapLongClickL
     @Override
     public void onForcedGuidedPoint(LatLng coord) {
         try {
-            //ControlApi.getApi(drone).goTo(MapUtils.latLngToCoord(coord), true, null);
-            final Altitude altitude = drone.getAttribute(AttributeType.ALTITUDE);
-
+//            ControlApi.getApi(drone).goTo(MapUtils.latLngToCoord(coord), true, null);
+            final Altitude altitude = drone.getAttribute(AttributeType.RELATIVE_ALTITUDE);
             ControlApi.getApi(drone).goTo(MapUtils.latLngToCoord(coord), altitude.getAltitude(), true, null);
         } catch (Exception e) {
             Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
