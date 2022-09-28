@@ -1048,7 +1048,7 @@ public class GoogleMapFragment extends SupportMapFragment implements DPMap,
                 if (mMarkerDragListener != null) {
                     final MarkerInfo markerInfo = markersMap.get(marker);
                     if (!(markerInfo instanceof GraphicHome)) {
-                        markerInfo.setPosition(MapUtils.latLngToCoord(marker.getPosition()));
+//                        markerInfo.setPosition(MapUtils.latLngToCoord(marker.getPosition()));
                         mMarkerDragListener.onMarkerDragStart(markerInfo);
                     }
                 }
@@ -1059,7 +1059,7 @@ public class GoogleMapFragment extends SupportMapFragment implements DPMap,
                 if (mMarkerDragListener != null) {
                     final MarkerInfo markerInfo = markersMap.get(marker);
                     if (!(markerInfo instanceof GraphicHome)) {
-                        markerInfo.setPosition(MapUtils.latLngToCoord(marker.getPosition()));
+//                        markerInfo.setPosition(MapUtils.latLngToCoord(marker.getPosition()));
                         mMarkerDragListener.onMarkerDrag(markerInfo);
                     }
                 }
