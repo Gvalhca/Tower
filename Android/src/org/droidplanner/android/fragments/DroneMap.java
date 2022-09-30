@@ -28,6 +28,7 @@ import org.droidplanner.android.fragments.helpers.ApiListenerFragment;
 import org.droidplanner.android.graphic.map.GraphicDrone;
 import org.droidplanner.android.graphic.map.GraphicGuided;
 import org.droidplanner.android.graphic.map.GraphicHome;
+import org.droidplanner.android.graphic.map.GraphicROI;
 import org.droidplanner.android.maps.DPMap;
 import org.droidplanner.android.maps.MarkerInfo;
 import org.droidplanner.android.maps.PolylineInfo;
@@ -65,6 +66,7 @@ public abstract class DroneMap extends ApiListenerFragment {
         eventFilter.addAction(AttributeEvent.ATTITUDE_UPDATED);
         eventFilter.addAction(AttributeEvent.HOME_UPDATED);
         eventFilter.addAction(ACTION_UPDATE_MAP);
+        eventFilter.addAction(AttributeEvent.ROI_POINT_UPDATED);
     }
 
     private final BroadcastReceiver eventReceiver = new BroadcastReceiver() {
@@ -77,6 +79,7 @@ public abstract class DroneMap extends ApiListenerFragment {
             switch (action) {
                 case ACTION_UPDATE_MAP:
                     guided.updateMarker(DroneMap.this);
+                    graphicROI.updateMarker(DroneMap.this);
                     break;
 
                 case AttributeEvent.HOME_UPDATED:
@@ -97,7 +100,12 @@ public abstract class DroneMap extends ApiListenerFragment {
 
                 case AttributeEvent.GUIDED_POINT_UPDATED:
                     guided.updateMarker(DroneMap.this);
+                    graphicROI.updateMarker(DroneMap.this);
                     mMapFragment.updateDroneLeashPath(guided);
+                    break;
+
+                case AttributeEvent.ROI_POINT_UPDATED:
+                    graphicROI.updateMarker(DroneMap.this);
                     break;
 
                 case AttributeEvent.HEARTBEAT_FIRST:
@@ -151,6 +159,7 @@ public abstract class DroneMap extends ApiListenerFragment {
     private GraphicHome home;
     private GraphicDrone graphicDrone;
     private GraphicGuided guided;
+    private GraphicROI graphicROI;
 
     protected MissionProxy missionProxy;
     protected Drone drone;
@@ -195,6 +204,9 @@ public abstract class DroneMap extends ApiListenerFragment {
 
         guided = new GraphicGuided(drone);
         mMapFragment.addMarker(guided);
+
+        graphicROI = new GraphicROI(drone);
+        mMapFragment.addMarker(graphicROI);
 
         for (LatLongAlt point : flightPathPoints) {
             mMapFragment.addFlightPathPoint(point);
