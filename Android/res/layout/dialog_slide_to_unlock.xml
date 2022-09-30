@@ -38,7 +38,7 @@
             android:thumb="@drawable/ic_unlock_slider"
             android:id="@+id/unlock_slider"
             android:layout_gravity="center"
-            android:thumbOffset="-1dp"
+            android:thumbOffset="15dp"
             />
 
         <me.grantland.widget.AutofitTextView

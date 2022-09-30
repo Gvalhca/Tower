@@ -6,7 +6,9 @@ import android.graphics.Bitmap;
 import com.o3dr.services.android.lib.coordinate.LatLong;
 import com.o3dr.services.android.lib.drone.mission.item.complex.Survey;
 
+import org.droidplanner.android.R;
 import org.droidplanner.android.maps.MarkerInfo;
+import org.droidplanner.android.maps.MarkerWithText;
 import org.droidplanner.android.proxy.mission.item.MissionItemProxy;
 
 /**
@@ -33,7 +35,6 @@ public class PolygonMarkerInfo extends MarkerInfo {
 		return polygonIndex;
 	}
 
-	
 	@Override
 	public float getAnchorU() {
 		return 0.5f;
@@ -41,12 +42,12 @@ public class PolygonMarkerInfo extends MarkerInfo {
 
 	@Override
 	public float getAnchorV() {
-		return 1.0f;
+		return 0.5f;
 	}
 
 	@Override
 	public Bitmap getIcon(Resources res) {
-		return null;
+		return MarkerWithText.getMarkerWithTextAndDetail(R.drawable.ic_wp_land, "", "", res);
 	}
 
 	@Override
@@ -66,10 +67,15 @@ public class PolygonMarkerInfo extends MarkerInfo {
 
 	@Override
 	public boolean isFlat() {
-		return true;
+		return false;
 	}
 
 	public MissionItemProxy getMarkerOrigin() {
 		return markerOrigin;
+	}
+
+	@Override
+	public boolean isDraggable() {
+		return true;
 	}
 }

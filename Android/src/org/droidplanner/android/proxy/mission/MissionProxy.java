@@ -392,6 +392,19 @@ public class MissionProxy implements DPMap.PathSource {
         return itemType == MissionItemType.RETURN_TO_LAUNCH || itemType == MissionItemType.LAND;
     }
 
+    public void setMissionAltitude(double missionAltitude) {
+        for (MissionItemProxy mip : missionItemProxies) {
+            MissionItem missionItem = mip.getMissionItem();
+            if (missionItem instanceof MissionItem.SpatialItem)
+                ((MissionItem.SpatialItem) missionItem).getCoordinate().setAltitude(missionAltitude);
+            else if (missionItem instanceof Survey) {
+                SurveyDetail surveyDetail = ((Survey) missionItem).getSurveyDetail();
+                if (surveyDetail != null)
+                    surveyDetail.setAltitude(missionAltitude);
+            }
+        }
+    }
+
     public void addTakeOffAndRTL() {
         if (!isFirstItemTakeoff()) {
             double defaultAlt = dpPrefs.getDefaultAltitude();
@@ -772,8 +785,7 @@ public class MissionProxy implements DPMap.PathSource {
                     extraPointsSaved = 0;
                 }
 
-            }
-            else {
+            } else {
                 if (mipList.contains(proxy))
                     resultItems.add(proxy);
             }

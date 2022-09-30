@@ -111,7 +111,8 @@ public class PolygonToolsImpl extends EditorToolsImpl implements AdapterView.OnI
 
         polygonPoints.add(point);
 
-        if (missionProxy != null && polygonPoints.size() > 0) {
+        if (missionProxy != null) {
+            polygonPoints.size();
             switch (selectedType) {
                 case SURVEY:
                     missionProxy.addSurveyPolygon(polygonPoints, false, polygonId);

@@ -677,7 +677,8 @@ public class DroidPlannerPrefs {
         surveyDetail.setWpInterval(prefs.getFloat(PREF_SURVEY_WP_INTERVAL, (float) Survey.DEFAULT_WP_INTERVAL));
 
         // Load the altitude.
-        surveyDetail.setAltitude(prefs.getFloat(PREF_SURVEY_ALTITUDE, 50));
+//        surveyDetail.setAltitude(prefs.getFloat(PREF_SURVEY_ALTITUDE, 50));
+        surveyDetail.setAltitude(getDefaultAltitude());
 
         // Load the survey angle.
         surveyDetail.setAngle(prefs.getFloat(PREF_SURVEY_ANGLE, 0));

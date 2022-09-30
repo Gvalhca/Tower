@@ -357,17 +357,19 @@ public abstract class SuperUI extends AppCompatActivity implements DroidPlannerA
                 if (missionProxy.getItems().isEmpty() || missionProxy.hasTakeoffAndLandOrRTL()) {
                     missionProxy.sendMissionToAPM(dpApi);
                 } else {
-                    SupportYesNoWithPrefsDialog dialog = SupportYesNoWithPrefsDialog.newInstance(
-                            getApplicationContext(), MISSION_UPLOAD_CHECK_DIALOG_TAG,
-                            getString(R.string.mission_upload_title),
-                            getString(R.string.mission_upload_message),
-                            getString(android.R.string.ok),
-                            getString(R.string.label_skip),
-                            DroidPlannerPrefs.PREF_AUTO_INSERT_MISSION_TAKEOFF_RTL_LAND, this);
-
-                    if (dialog != null) {
-                        dialog.show(getSupportFragmentManager(), MISSION_UPLOAD_CHECK_DIALOG_TAG);
-                    }
+                    missionProxy.addTakeOffAndRTL();
+                    missionProxy.sendMissionToAPM(dpApi);
+//                    SupportYesNoWithPrefsDialog dialog = SupportYesNoWithPrefsDialog.newInstance(
+//                            getApplicationContext(), MISSION_UPLOAD_CHECK_DIALOG_TAG,
+//                            getString(R.string.mission_upload_title),
+//                            getString(R.string.mission_upload_message),
+//                            getString(android.R.string.ok),
+//                            getString(R.string.label_skip),
+//                            DroidPlannerPrefs.PREF_AUTO_INSERT_MISSION_TAKEOFF_RTL_LAND, this);
+//
+//                    if (dialog != null) {
+//                        dialog.show(getSupportFragmentManager(), MISSION_UPLOAD_CHECK_DIALOG_TAG);
+//                    }
                 }
                 return true;
             }
