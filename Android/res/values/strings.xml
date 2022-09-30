@@ -496,6 +496,8 @@
     <string name="mission_upload_title">Mission Upload</string>
     <string name="mission_upload_message">Do you want to append a Takeoff and RTL to your mission?</string>
     <string name="label_skip">Skip</string>
+    <string name="set_mission_altitude_title">Mission altitude in meters</string>
+    <string name="set_mission_altitude_message">Set mission altitude in meters</string>
 
     <!-- Telemetry widget labels -->
     <string name="label_widget_solo_video">Solo Video</string>
@@ -563,7 +565,8 @@
     <string name="speak_mission_sent">Waypoints saved to Drone</string>
     <string name="toast_mission_received">Waypoints received from Drone</string>
     <string name="toast_mission_item_received">New wp received from drone \n %1$d / %2$d Done</string>
-    <string name="toast_mission_item_sent">New wp sent from drone \n %1$d / %2$d Done</string>
+    <string name="toast_mission_item_sent">New wp sent to drone \n %1$d / %2$d Done</string>
+    <string name="toast_wrong_mission_altitude_input">Incorrect mission altitude input</string>
     <string name="speak_mission_received">Waypoints received</string>
     <string name="speak_heartbeat_first">Connected</string>
     <string name="speak_heartbeat_timeout">Data link lost, check connection.</string>

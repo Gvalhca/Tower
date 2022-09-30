@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -224,20 +225,24 @@ public class GoogleMapFragment extends SupportMapFragment implements DPMap,
     private final GoogleApiClientTask mGoToMyLocationTask = new GoogleApiClientTask() {
         @Override
         public void doRun() {
-            if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions( //Method of Fragment
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-                        LOCATION_PERMISSION_REQUEST_CODE
-                );
-            } else {
-                final Location myLocation = LocationServices.FusedLocationApi.getLastLocation(getGoogleApiClient());
-                if (myLocation != null) {
-                    updateCamera(MapUtils.locationToCoord(myLocation), GO_TO_MY_LOCATION_ZOOM);
+            try {
+                if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                        ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions( //Method of Fragment
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                            LOCATION_PERMISSION_REQUEST_CODE
+                    );
+                } else {
+                    final Location myLocation = LocationServices.FusedLocationApi.getLastLocation(getGoogleApiClient());
+                    if (myLocation != null) {
+                        updateCamera(MapUtils.locationToCoord(myLocation), GO_TO_MY_LOCATION_ZOOM);
 
-                    if (mLocationListener != null)
-                        mLocationListener.onLocationChanged(myLocation);
+                        if (mLocationListener != null)
+                            mLocationListener.onLocationChanged(myLocation);
+                    }
                 }
+            } catch (Exception e) {
+                Log.e("GoogleMap Exception", e.getMessage(), e);
             }
         }
     };
@@ -257,15 +262,19 @@ public class GoogleMapFragment extends SupportMapFragment implements DPMap,
                     .setFastestInterval(USER_LOCATION_UPDATE_FASTEST_INTERVAL)
                     .setInterval(USER_LOCATION_UPDATE_INTERVAL)
                     .setSmallestDisplacement(USER_LOCATION_UPDATE_MIN_DISPLACEMENT);
-            if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions( //Method of Fragment
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-                        LOCATION_PERMISSION_REQUEST_CODE
-                );
-            } else {
-                LocationServices.FusedLocationApi.requestLocationUpdates(getGoogleApiClient(), locationReq,
-                        locationCb, handler.getLooper());
+            try {
+                if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                        ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions( //Method of Fragment
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                            LOCATION_PERMISSION_REQUEST_CODE
+                    );
+                } else {
+                    LocationServices.FusedLocationApi.requestLocationUpdates(getGoogleApiClient(), locationReq,
+                            locationCb, handler.getLooper());
+                }
+            } catch (Exception e) {
+                Log.e("GoogleMap Exception", e.getMessage(), e);
             }
         }
     };

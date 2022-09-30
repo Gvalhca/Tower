@@ -42,6 +42,7 @@ import com.o3dr.services.android.lib.model.SimpleCommandListener;
 import org.droidplanner.android.AppService;
 import org.droidplanner.android.DroidPlannerApp;
 import org.droidplanner.android.R;
+import org.droidplanner.android.dialogs.EditInputDialog;
 import org.droidplanner.android.dialogs.SlideToUnlockDialog;
 import org.droidplanner.android.dialogs.SupportYesNoDialog;
 import org.droidplanner.android.dialogs.SupportYesNoWithPrefsDialog;
@@ -57,9 +58,10 @@ import org.droidplanner.android.utils.unit.systems.UnitSystem;
  * Parent class for the app activity classes.
  */
 public abstract class SuperUI extends AppCompatActivity implements DroidPlannerApp.ApiListener,
-        SupportYesNoDialog.Listener, ServiceConnection {
+        SupportYesNoDialog.Listener, ServiceConnection, EditInputDialog.Listener {
 
     private static final String MISSION_UPLOAD_CHECK_DIALOG_TAG = "Mission Upload check.";
+    public static final String MISSION_ALTITUDE_DIALOG_TAG = "Mission Altitude input.";
 
     private static final IntentFilter superIntentFilter = new IntentFilter();
 
@@ -319,6 +321,14 @@ public abstract class SuperUI extends AppCompatActivity implements DroidPlannerA
     }
 
     @Override
+    public void onOk(String dialogTag, CharSequence input) {
+    }
+
+    @Override
+    public void onCancel(String dialogTag) {
+    }
+
+    @Override
     public void onDialogYes(String dialogTag) {
         final Drone drone = dpApp.getDrone();
         final MissionProxy missionProxy = dpApp.getMissionProxy();
@@ -357,8 +367,13 @@ public abstract class SuperUI extends AppCompatActivity implements DroidPlannerA
                 if (missionProxy.getItems().isEmpty() || missionProxy.hasTakeoffAndLandOrRTL()) {
                     missionProxy.sendMissionToAPM(dpApi);
                 } else {
-                    missionProxy.addTakeOffAndRTL();
-                    missionProxy.sendMissionToAPM(dpApi);
+                    EditInputDialog dialog = EditInputDialog.newInstance(MISSION_ALTITUDE_DIALOG_TAG,
+                            getString(R.string.set_mission_altitude_title),
+                            String.valueOf(DroidPlannerPrefs.getInstance(getApplicationContext()).getDefaultAltitude()),
+                            true);
+
+                    dialog.show(getFragmentManager(), MISSION_ALTITUDE_DIALOG_TAG);
+
 //                    SupportYesNoWithPrefsDialog dialog = SupportYesNoWithPrefsDialog.newInstance(
 //                            getApplicationContext(), MISSION_UPLOAD_CHECK_DIALOG_TAG,
 //                            getString(R.string.mission_upload_title),

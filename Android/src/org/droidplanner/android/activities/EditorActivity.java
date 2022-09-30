@@ -20,7 +20,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.o3dr.android.client.Drone;
 import com.o3dr.android.client.utils.FileUtils;
 import com.o3dr.services.android.lib.coordinate.LatLong;
 import com.o3dr.services.android.lib.drone.attribute.AttributeEvent;
@@ -375,6 +377,17 @@ public class EditorActivity extends DrawerNavigationUI implements OnPathFinished
                         : new File(openedMissionFile.getParent(), input.toString() + FileList.WAYPOINT_FILENAME_EXT);
                 missionProxy.writeMissionToFile(Uri.fromFile(saveFile));
                 break;
+            /// TODO: Check min and max alt
+            case MISSION_ALTITUDE_DIALOG_TAG:
+                try {
+                    double missionAlt = Double.parseDouble((String) input);
+                    missionProxy.setMissionAltitude(missionAlt);
+                    missionProxy.addTakeOffAndRTL();
+                    missionProxy.sendMissionToAPM(dpApp.getDrone());
+                    break;
+                } catch (Exception e){
+                    Toast.makeText(getApplicationContext(), getString(R.string.toast_wrong_mission_altitude_input), Toast.LENGTH_SHORT).show();
+                }
         }
     }
 

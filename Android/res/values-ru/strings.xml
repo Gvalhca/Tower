@@ -425,6 +425,8 @@
     <string name="mission_upload_title">Загрузка миссии</string>
     <string name="mission_upload_message">Хотите добавить Взлет и RTL к своей миссии?</string>
     <string name="label_skip">Пропустить</string>
+    <string name="set_mission_altitude_title">Установите высоту для миссии в метрах</string>
+    <string name="set_mission_altitude_message">Установите высоту для миссии в метрах</string>
     <string name="label_widget_solo_video">Видео</string>
     <string name="description_widget_solo_video">Отображает видеопоток с подключенного БПЛА Solo.</string>
     <string name="label_widget_uvc_video">УФ-видео</string>
@@ -485,6 +487,7 @@
     <string name="label_udp_port">UDP-порт:</string>
     <string name="toast_mission_item_received">Новые точки получены с борта \n %1$d / %2$d загружено</string>
     <string name="toast_mission_item_sent">Новые точки отправлены на борт \n %1$d / %2$d загружено</string>
+    <string name="toast_wrong_mission_altitude_input">Отмена записи. Введена некорректная высота миссии</string>
     <string name="toast_mission_sent">Путевые точки отправлены</string>
     <string name="speak_mission_sent">Путевые точки сохранены в Drone</string>
     <string name="toast_mission_received">Путевые точки полученны от дрона</string>
