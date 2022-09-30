@@ -599,7 +599,7 @@ public class EditorActivity extends DrawerNavigationUI implements OnPathFinished
             removeItemDetail();
         } else {
             itemDetailToggle.setVisibility(View.VISIBLE);
-            if (getTool() == EditorTools.SELECTOR || getTool() == EditorTools.POLYGON)
+            if (getTool() == EditorTools.SELECTOR)
                 removeItemDetail();
             else {
                 showItemDetail(selectMissionDetailType(selected));
