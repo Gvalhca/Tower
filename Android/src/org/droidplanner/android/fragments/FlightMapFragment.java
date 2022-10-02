@@ -233,15 +233,16 @@ public class FlightMapFragment extends DroneMap implements DPMap.OnMapLongClickL
 
     @Override
     public void onForcedGuidedPoint(LatLng coord) {
-        try {
+        if (Drone.currentLongPressState == Drone.LongPressState.GOTO) {
+            try {
 //            ControlApi.getApi(drone).goTo(MapUtils.latLngToCoord(coord), true, null);
-            final Altitude altitude = drone.getAttribute(AttributeType.RELATIVE_ALTITUDE);
-            ControlApi.getApi(drone).goTo(MapUtils.latLngToCoord(coord), altitude.getAltitude(), true, null);
-        } catch (Exception e) {
-            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                final Altitude altitude = drone.getAttribute(AttributeType.RELATIVE_ALTITUDE);
+                ControlApi.getApi(drone).goTo(MapUtils.latLngToCoord(coord), altitude.getAltitude(), true, null);
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         }
     }
-
     @Override
     public void onMarkerDragStart(MarkerInfo markerInfo) {
     }
@@ -252,14 +253,14 @@ public class FlightMapFragment extends DroneMap implements DPMap.OnMapLongClickL
 
     @Override
     public void onMarkerDragEnd(MarkerInfo markerInfo) {
-        if (!(markerInfo instanceof GraphicHome)) {
-            ControlApi.getApi(drone).goTo(markerInfo.getPosition(), false, null);
+        if (!(markerInfo instanceof GraphicHome) && Drone.currentLongPressState == Drone.LongPressState.GOTO) {
+                ControlApi.getApi(drone).goTo(markerInfo.getPosition(), false, null);
         }
     }
 
     @Override
     public boolean onMarkerClick(MarkerInfo markerInfo) {
-        if(markerInfo == null)
+        if(markerInfo == null || Drone.currentLongPressState != Drone.LongPressState.GOTO)
             return false;
         ControlApi.getApi(drone).goTo(markerInfo.getPosition(), false, null);
         return true;
