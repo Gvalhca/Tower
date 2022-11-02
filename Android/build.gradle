@@ -222,7 +222,8 @@ android {
     productFlavors {
         dev {
             applicationIdSuffix ".debug"
-            resValue "string", "app_title", "Tower Dev"
+//            resValue "string", "app_title", "Tower Dev"
+            resValue "string", "app_title", "Звонарь"
             resValue "string", "baidu_api_key", ""
             versionName generateVersionName(versionPrefix, versionMajor, versionMinor, versionPatch, "debug.${versionBuild}")
 
